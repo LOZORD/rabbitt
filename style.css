@@ -1,0 +1,215 @@
+/* The CSS for RABiTT */
+body
+{
+	background-color: #6E2717;
+	margin: 0 auto;
+	font-family: Big Caslon, cursive;
+	color: gold;
+	/*text-align: center;*/
+	padding-left: 10px;
+	padding-bottom: 10px;
+}
+
+.container
+{
+	/*margin: 0 auto;
+	text-align: center;*/
+	/*margin: 0 auto;*/
+}
+
+.box
+{
+	background-color: gray;
+	height: 800px;
+	width: 690px;
+	/* try auto height */
+	margin: 0 auto;
+	z-index: 0;
+	position: absolute;
+	left: 28%;
+}
+.glass
+{
+	/*background-color: #56DFFF;*/
+	background-color: tan;
+	opacity: 0.5;
+	/*height: 750px;
+	width: 750px;*/
+	/*width: 725px;*/
+	width: 680px;
+	z-index: 5;
+	margin: 5px 5px 0 5px;
+	position: absolute;
+	/*left: 28%;*/
+}
+
+.block
+{
+	position: relative;
+	background-color: red;
+	border-radius: 5px;
+	width: 160px;
+	height: 160px;
+	z-index: 1;
+	margin: 0;
+	padding: 0;
+	/*float: left;*/
+	/*margin-left: 10px;*/
+	/*margin-left: 0 auto;*/
+	margin: 5px;
+	opacity: 1;
+}
+
+.block_col
+{
+	float: left;	
+}
+
+/* first col */
+
+#e0
+{
+
+}
+
+#e1
+{
+	
+}
+
+#e2 
+{
+	
+}
+
+#e3 
+{
+	
+}
+
+/* second col */
+
+#e4 
+{
+	
+}
+
+#e5 
+{
+	
+}
+
+#e6 
+{
+	
+}
+
+#e7 
+{
+	
+}
+
+/* third col */
+
+#e8 
+{
+
+}
+
+#e9 
+{
+
+}
+
+#e10 
+{
+
+}
+
+#e11 
+{
+
+}
+
+/* fourth col */
+
+#e12 
+{
+
+}
+
+#e13 
+{
+
+}
+
+#e14 
+{
+
+}
+
+#e15 
+{
+
+}
+
+/*.zerobutton
+{
+	background-color: pink;
+	width: 10px;
+	height: 10px;
+	bottom: 10px;
+	z-index: 1;
+}*/
+
+#button_bar
+{
+	position: absolute;
+	bottom: 5px;
+	/*background-color: pink;*/
+	width: auto;
+	height: 100px;
+	text-align: center;
+	margin: 0 auto;
+	/*float:left;*/
+}
+
+.myButton
+{
+	float: left;
+	width: 100px;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	border-radius: 5px;
+	margin: 10px;
+}
+
+#button0
+{
+	background-color: black;
+	color: white;
+	/*float: left;*/
+	/*text-align: center;*/
+}
+
+#button1
+{
+	background-color: white;
+	color: black;
+	/*float: left;*/
+	/*te*/
+}
+
+#button_enter
+{
+	background-color: lightgray;
+	color: black;
+	/*float: left;*/
+}
+
+#screen
+{
+	background-color: tan;
+	color: dimgray;
+	width: 300px;
+}
