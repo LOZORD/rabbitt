@@ -83,9 +83,7 @@ $(document).ready(
 			var rowNum = parseInt(str.substr(2,2), 2);
 			var aColor = parseInt(str.substr(4,2), 2);
 
-			eArr[rowNum][colNum].css("background-color", colors[aColor]);
-
-
+			eArr[rowNum][colNum].animate({backgroundColor: colors[aColor]}, 750);
 
 
 			//console.log(str);
