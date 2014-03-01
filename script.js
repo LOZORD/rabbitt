@@ -8,42 +8,40 @@ $(document).ready(
 						[$("#e8"), $("#e9"), $("#e10"), $("#e11")],
 						[$("#e12"), $("#e13"), $("#e14"), $("#e15")]
 					];
-		var colors = ["red","green","blue","yellow"];
+		var colors = ["red","green","blue","yellow"];// "cyan", "yellow","magenta","white","black","orange","brown","pink","purple","gray","tan","chartreuse"];
 
 		var myScreen = $("#screen");
+
+		var binStringLengthMax = 6;
 
 		//console.log(binString);
 
 		$('#button0').click(
 			function()
 			{
-				//var binString = myScreen.text();
 
-				if (myScreen.text().length < 6)
+				if (myScreen.text().length < binStringLengthMax)
 					myScreen.append("0");
 				else
 					myScreen.text(myScreen.text().substr(1) + "0");
 
-				//$("#screen").val(binString);
-
-				if (myScreen.text().length === 6)
+				if (myScreen.text().length === binStringLengthMax)
 					$("#button_enter").css("background-color","darkgray");
 				
-				//console.log(binString);
 			}
 		);
 
 		$('#button1').click(
 			function()
 			{
-				if (myScreen.text().length < 6)
+				if (myScreen.text().length < binStringLengthMax)
 					myScreen.append("1");
 				else
 					myScreen.text(myScreen.text().substr(1) + "1");
 
 				//$("#screen").val(binString);
 
-				if (myScreen.text().length === 6)
+				if (myScreen.text().length === binStringLengthMax)
 					$("#button_enter").css("background-color","darkgray");
 
 				//console.log(binString);
@@ -56,7 +54,7 @@ $(document).ready(
 			{
 				//console.log("pizza");
 
-				if (myScreen.text().length === 6)
+				if (myScreen.text().length === binStringLengthMax)
 				{
 					//console.log(binString);
 					updateBox(myScreen.text());
@@ -81,7 +79,9 @@ $(document).ready(
 
 			var colNum = parseInt(str.substr(0,2), 2);
 			var rowNum = parseInt(str.substr(2,2), 2);
-			var aColor = parseInt(str.substr(4,2), 2);
+			var aColor = parseInt(str.substr(4,4), 2);
+
+			console.log(aColor);
 
 			eArr[rowNum][colNum].animate({backgroundColor: colors[aColor]}, 750);
 
