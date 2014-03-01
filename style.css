@@ -211,5 +211,8 @@ body
 {
 	background-color: tan;
 	color: dimgray;
+	font-family: Menlo, monospace;
+	font-size: 2em;
 	width: 300px;
+	height: 45px;
 }
