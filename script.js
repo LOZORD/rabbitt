@@ -9,10 +9,7 @@ $(document).ready(
 						[$("#e8"), $("#e9"), $("#e10"), $("#e11")],
 						[$("#e12"), $("#e13"), $("#e14"), $("#e15")]
 					];
-		var colors = ["red","green","blue","yellow"];
-		//other colors for later versions
-		// "cyan", "yellow","magenta","white",
-		//"black","orange","brown","pink","purple","gray","tan","chartreuse"];
+
 
 		//the screen variable
 		var myScreen = $("#screen");
@@ -21,21 +18,20 @@ $(document).ready(
 
 		const numColBits = 2;
 
-		const numClrBits = 2;
+		//must be a positive number divisible by 3
+		const numClrBits = 6;
+
+		const eachClrBit = numClrBits/3;
 
 		//the current length of the binary string accepted
 		const binStringLengthMax = numRowBits + numColBits + numClrBits;
-
-		//console.log(binString);
 
 		var guideGone = false;
 
 		$('#button0').click(
 			function()
 			{
-
 				updateScreen("0");
-				
 			}
 		);
 
@@ -50,75 +46,76 @@ $(document).ready(
 		$("#button_enter").click(
 			function()
 			{
-				//console.log("pizza");
 
 				if (myScreen.text().length === binStringLengthMax)
 				{
-					//console.log(binString);
+					//push the current binary screen to make changes
 					updateBox(myScreen.text());
 
+					//then, empty the screen
 					myScreen.text("");
 
-					$("#button_enter").css("background-color","lightgray")
-
-					//$("#screen").val(binString);
+					//change the button back to the "inactive" color
+					$("#button_enter").css("background-color","lightgray");
 				}
 			}
 		);
 
-		//$("#screen").val(binString);
-
 		$("#guide_ctr").click(fadeGuide);
-
-
-		// $(".block").mouseenter
-		// (
-		// 	function()
-		// 	{
-		// 		if (guideGone)
-		// 			toBinaryString($(this));
-		// 	}
-		// );
-
-		// $(".block").mouseleave
-		// (
-		// 	function()
-		// 	{
-		// 		if (guideGone)
-		// 			$(this).text("");
-		// 	}
-		// );
-
-
-		function updateBox (str)
-		{
-			// //$("#screen").text(str);
-			// console.log("HOLA");
-			// ///UPDATE COLOR BOXES HERE, AKA PARSE!
-
-			var colNum = parseInt(str.substr(0,2), 2);
-			var rowNum = parseInt(str.substr(2,2), 2);
-			var aColor = parseInt(str.substr(4,4), 2);
-
-			console.log(aColor);
-
-			eArr[rowNum][colNum].animate({backgroundColor: colors[aColor]}, 750);
-
-			// eArr[rowNum][colNum]._myColor = colors[aColor];
-
-
-			//console.log(str);
-
-		}
 
 		function fadeGuide()
 		{
-			// $("#guide_ctr").fadeOut("fast");
 			$("#guide_ctr").hide("slide", {}, 1000);
 
 			guideGone = true;
 		}
 
+
+		//TODO -- show binary data when user hovers over block
+		$(".block").mouseenter
+		(
+			function()
+			{
+				console.log("hovered over block");
+
+				//if (guideGone)
+					//toBinaryString($(this));
+			}
+		);
+
+		//Clear blocks' text when the mouse exits them
+		$(".block").mouseleave
+		(
+			function()
+			{
+				if (guideGone)
+					$(this).text("");
+			}
+		);
+
+
+		//apply the user's binary string to the toy's screen
+		function updateBox (str)
+		{
+			var colNum = parseInt(str.substr(0, numRowBits), 2);
+			var rowNum = parseInt(str.substr(numRowBits, numColBits), 2);
+			
+			//get the entire color segment
+
+			var aColor = parseInt(str.substr(numRowBits+numColBits), 2);
+
+			var rgbStr = str.substr(numRowBits + numColBits);
+
+			var redAmnt = rgbNormalize(parseInt(rgbStr.substr(0, eachClrBit), 2));
+			var grnAmnt = rgbNormalize(parseInt(rgbStr.substr(eachClrBit, eachClrBit), 2));
+			var bluAmnt = rgbNormalize(parseInt(rgbStr.substr(2*eachClrBit), 2));
+
+			var toRGBString = "rgb(" + redAmnt + "," + grnAmnt + "," + bluAmnt + ")";
+
+			eArr[rowNum][colNum].animate({backgroundColor: toRGBString}, 750);
+		}
+
+		//updates the binary entry screen at the bottom of the toy
 		function updateScreen(bit)
 		{
 				if (myScreen.text().length < binStringLengthMax)
@@ -130,6 +127,7 @@ $(document).ready(
 					$("#button_enter").css("background-color","darkgray");
 		}
 
+		//used for hovering over blocks to show their binary data value
 		function toBinaryString(myElement)
 		{
 
@@ -163,7 +161,13 @@ $(document).ready(
 
 
 		}
-		
+
+		function rgbNormalize(num)
+		{
+			return (num * 255 / (Math.pow(2, eachClrBit) - 1));
+		}
+	
+		//TODO fix keyboard input		
 
 	}
 
