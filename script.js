@@ -10,7 +10,6 @@ $(document).ready(
 						[$("#e12"), $("#e13"), $("#e14"), $("#e15")]
 					];
 
-
 		//the screen variable
 		var myScreen = $("#screen");
 
@@ -19,14 +18,25 @@ $(document).ready(
 		const numColBits = 2;
 
 		//must be a positive number divisible by 3
-		const numClrBits = 6;
+		//const numClrBits = 3;
 
-		const eachClrBit = numClrBits/3;
+		//const eachClrBit = numClrBits/3;
+
+		const eachClrBit = 2;
+
+		const numClrBits = eachClrBit * 3;
 
 		//the current length of the binary string accepted
 		const binStringLengthMax = numRowBits + numColBits + numClrBits;
 
 		var guideGone = false;
+
+		$("#amntColors").text(Math.pow(2, numClrBits));
+		$("#binStrLen").text(binStringLengthMax);
+
+		$("#numRowBits").text(numRowBits);
+		$("#numColBits").text(numColBits);
+		$("#numClrBits").text(numClrBits);
 
 		$('#button0').click(
 			function()
@@ -76,10 +86,10 @@ $(document).ready(
 		(
 			function()
 			{
-				console.log("hovered over block");
-
-				//if (guideGone)
-					//toBinaryString($(this));
+				//$(this).text(toBinaryString($(this)));
+				//$
+				$(this).find("span").text(toBinaryString($(this)));
+				$(this).find("span").css({backgroundColor: "black", color: "white", opacity: 1, fontFamily: "Menlo, monospace"});
 			}
 		);
 
@@ -89,7 +99,8 @@ $(document).ready(
 			function()
 			{
 				if (guideGone)
-					$(this).text("");
+					$(this).find("span").text("");
+					$(this).find("span").css("opacity", 0);
 			}
 		);
 
@@ -131,34 +142,19 @@ $(document).ready(
 		function toBinaryString(myElement)
 		{
 
-			//console.log(myElement);
-
-			//better way to do this using eArr?
-
 			var eleNum = parseInt(myElement.attr("id").substr(1), 10);
 
-			var colorNum = colors.indexOf(myElement._myColor);
+			var rowNum = parseInt(eleNum % 4, 10, 2);
 
-			var rowNum = eleNum % 4;
+			var colNum = parseInt(eleNum / 4, 10, 2);
 
-			//var colNum = eleNum / 4
+			var clrNumArr = myElement.css("background-color").split(',');
 
-			var colNum = Math.floor(eleNum / 4);
+			var red = clrNumArr[0].substr(3);
+			var grn = clrNumArr[1];
+			var blu = clrNumArr[2];
 
-			//TODO figure out how to parse the color!!!
-			//make it easy -- make last binary numbers rgb numbers!!!!!
-
-
-			// var bRow = parseInt(rowNum, 2);
-			// var bCol = parseInt(colNum, 2);
-			// var bClr = parseInt(colorNum, 2);
-
-			var retBinStr = rowNum + " " + colNum + " " + colorNum;
-
-			//console.log(retBinStr);
-
-			myElement.text(retBinStr);
-
+			return (rowNum + " " + colNum + " " + red + " " + grn + " " + blu);
 
 		}
 
