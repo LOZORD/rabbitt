@@ -29,6 +29,10 @@ $(document).ready(
 		//the current length of the binary string accepted
 		const binStringLengthMax = numRowBits + numColBits + numClrBits;
 
+		const zeroKey = 48;
+		const oneKey = 49;
+		const enterKey = 13;
+
 		var guideGone = false;
 
 		$("#amntColors").text(Math.pow(2, numClrBits));
@@ -56,18 +60,8 @@ $(document).ready(
 		$("#button_enter").click(
 			function()
 			{
-
-				if (myScreen.text().length === binStringLengthMax)
-				{
-					//push the current binary screen to make changes
-					updateBox(myScreen.text());
-
-					//then, empty the screen
-					myScreen.text("");
-
-					//change the button back to the "inactive" color
-					$("#button_enter").css("background-color","lightgray");
-				}
+				submitScreen();
+				
 			}
 		);
 
@@ -99,8 +93,10 @@ $(document).ready(
 			function()
 			{
 				if (guideGone)
+				{
 					$(this).find("span").text("");
 					$(this).find("span").css("opacity", 0);
+				}
 			}
 		);
 
@@ -129,13 +125,13 @@ $(document).ready(
 		//updates the binary entry screen at the bottom of the toy
 		function updateScreen(bit)
 		{
-				if (myScreen.text().length < binStringLengthMax)
-					myScreen.append(bit);
-				else
-					myScreen.text(myScreen.text().substr(1) + bit);
+			if (myScreen.text().length < binStringLengthMax)
+				myScreen.append(bit);
+			else
+				myScreen.text(myScreen.text().substr(1) + bit);
 
-				if (myScreen.text().length === binStringLengthMax)
-					$("#button_enter").css("background-color","darkgray");
+			if (myScreen.text().length === binStringLengthMax)
+				$("#button_enter").css("background-color","darkgray");
 		}
 
 		//used for hovering over blocks to show their binary data value
@@ -144,9 +140,9 @@ $(document).ready(
 
 			var eleNum = parseInt(myElement.attr("id").substr(1), 10);
 
-			var rowNum = parseInt(eleNum % 4, 10, 2);
+			var rowNum = parseInt(eleNum % 4, 10);
 
-			var colNum = parseInt(eleNum / 4, 10, 2);
+			var colNum = parseInt(eleNum / 4, 10);
 
 			var clrNumArr = myElement.css("background-color").split(',');
 
@@ -163,8 +159,40 @@ $(document).ready(
 			return (num * 255 / (Math.pow(2, eachClrBit) - 1));
 		}
 	
-		//TODO fix keyboard input		
+		//what to do when the user presses the enter button
+		function submitScreen()
+		{
+			if (myScreen.text().length === binStringLengthMax)
+				{
+					//push the current binary screen to make changes
+					updateBox(myScreen.text());
+
+					//then, empty the screen
+					myScreen.text("");
+
+					//change the button back to the "inactive" color
+					$("#button_enter").css("background-color","lightgray");
+				}
+		}
+
+		//TODO make keyboard input
+
+
+		$(document).keydown(
+			function(event)
+			{
+				if(event.which === zeroKey)
+					updateScreen("0");
+				if(event.which === oneKey)
+					updateScreen("1");
+				if(event.which === enterKey)
+					submitScreen();
+			}
+		);
+
 
 	}
 
 );
+
+/* END JS */
