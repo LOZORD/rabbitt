@@ -35,6 +35,9 @@ $(document).ready(
 
 		var guideGone = false;
 
+		const downTime = 500;
+
+
 		$("#amntColors").text(Math.pow(2, numClrBits));
 		$("#binStrLen").text(binStringLengthMax);
 
@@ -42,26 +45,86 @@ $(document).ready(
 		$("#numColBits").text(numColBits);
 		$("#numClrBits").text(numClrBits);
 
-		$('#button0').click(
-			function()
-			{
-				updateScreen("0");
-			}
-		);
+		// $('#button0').click(
+		// 	function()
+		// 	{
+		// 		updateScreen("0");
+		// 	}
+		// );
 
-		$('#button1').click(
-			function()
-			{
-				updateScreen("1");
-			}
-		);
+		// $('#button1').click(
+		// 	function()
+		// 	{
+		// 		updateScreen("1");
+		// 	}
+		// );
 
 
-		$("#button_enter").click(
-			function()
-			{
-				submitScreen();
+		// $("#button_enter").click(
+		// 	function()
+		// 	{
+		// 		submitScreen();
 				
+		// 	}
+		// );
+
+		$(document).on('keydown click', function(e) 
+			{
+				if(guideGone)
+				{
+					// if(e.type === 'keydown')
+					// {
+					// 	//console.log("key pressed!");
+
+					// 	if (e.keyCode === zeroKey)
+					// 	{
+					// 		updateScreen('0');
+
+					// 	}
+					// }
+					// else if (e.type === 'click')
+					// {
+					// 	//console.log('i was clicked!');
+					// }
+
+
+					//if (e.keyCode === )
+
+					var myTarget = getEventTarget(e);
+
+
+					//updateScreen(myTarget)
+
+					if (myTarget !== 'enter' && myTarget !== null)
+						updateScreen(myTarget);
+					else if (myTarget !== null)
+						submitScreen();
+					else
+						return;
+
+					myTarget = "#" + myTarget;
+
+					// $(document).keydown(function(e2)
+					// 	{
+					// 		while(determineKey(e2) === myTarget)
+					// 		{
+					// 			$(myTarget)...
+					// 		}
+					// 	}
+					// );
+
+
+					// if (myTarget != null)
+					// {
+
+					// }
+
+					// if (myTarget != null)
+					// 	console.log(myTarget + " booyah");
+
+
+				}
+				//console.log(e);
 			}
 		);
 
@@ -74,8 +137,6 @@ $(document).ready(
 			guideGone = true;
 		}
 
-
-		//TODO -- show binary data when user hovers over block
 		$(".block").mouseenter
 		(
 			function()
@@ -125,6 +186,9 @@ $(document).ready(
 		//updates the binary entry screen at the bottom of the toy
 		function updateScreen(bit)
 		{
+
+
+
 			if (myScreen.text().length < binStringLengthMax)
 				myScreen.append(bit);
 			else
@@ -178,20 +242,65 @@ $(document).ready(
 		//TODO make keyboard input
 
 
-		$(document).keydown(
-			function(event)
+		// $(document).keydown(
+		// 	function(event)
+		// 	{
+		// 		if (guideGone)
+		// 		{
+		// 			if(event.which === zeroKey)
+		// 				updateScreen("0");
+		// 			if(event.which === oneKey)
+		// 				updateScreen("1");
+		// 			if(event.which === enterKey)
+		// 				submitScreen();
+		// 		}
+		// 	}
+		// );
+
+		function getEventTarget(e)
+		{
+
+			//console.log(e)
+
+			if (e.type === 'keydown')
 			{
-				if (guideGone)
-				{
-					if(event.which === zeroKey)
-						updateScreen("0");
-					if(event.which === oneKey)
-						updateScreen("1");
-					if(event.which === enterKey)
-						submitScreen();
-				}
+				// if (e.keyCode === zeroKey)
+				// 	return '0';
+				// else if (e.keyCode === oneKey)
+				// 	return '1';
+				// else if (e.keyCode === enterKey)
+				// 	return 'enter';
+
+				return determineKey(e);
 			}
-		);
+
+			//they must have clicked
+			else if (e.type === 'click' && (e.toElement.className.search('clickBtn') > 1))
+			{
+				//var btnName = "#";
+
+				//btnName += e.toElement.id;
+
+				//console.log(e.toElement.innerText.toLowerCase() + " was clicked!");
+
+				return e.toElement.innerText.toLowerCase();
+			}
+
+			else
+				return null;
+		}
+
+		function determineKey (e)
+		{
+			if (e.keyCode === zeroKey)
+				return '0';
+			else if (e.keyCode === oneKey)
+				return '1';
+			else if (e.keyCode === enterKey)
+				return 'enter';
+			else
+				return null;
+		}
 
 
 	}
