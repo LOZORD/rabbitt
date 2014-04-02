@@ -181,12 +181,15 @@ $(document).ready(
 		$(document).keydown(
 			function(event)
 			{
-				if(event.which === zeroKey)
-					updateScreen("0");
-				if(event.which === oneKey)
-					updateScreen("1");
-				if(event.which === enterKey)
-					submitScreen();
+				if (guideGone)
+				{
+					if(event.which === zeroKey)
+						updateScreen("0");
+					if(event.which === oneKey)
+						updateScreen("1");
+					if(event.which === enterKey)
+						submitScreen();
+				}
 			}
 		);
 

@@ -1,7 +1,8 @@
 /* The CSS for RABiTT */
 body
 {
-	background-color: #6E2717;
+	/*background-color: #6E2717;*/
+	background-color: #BF8F64; /* #FFBF85; */
 	margin: 0 auto;
 	font-family: Big Caslon, cursive;
 	color: dimgray;
@@ -9,7 +10,7 @@ body
 	
 	height: 100%;
 	width: 100%;
-	background-image: url("wood.jpg"); 
+	/*background-image: url("wood.jpg"); */
 }
 
 h1
