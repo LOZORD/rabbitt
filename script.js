@@ -37,6 +37,8 @@ $(document).ready(
 
 		const downTime = 500;
 
+		var oneSubmit = false;
+
 
 		$("#amntColors").text(Math.pow(2, numClrBits));
 		$("#binStrLen").text(binStringLengthMax);
@@ -72,35 +74,18 @@ $(document).ready(
 			{
 				if(guideGone)
 				{
-					// if(e.type === 'keydown')
-					// {
-					// 	//console.log("key pressed!");
-
-					// 	if (e.keyCode === zeroKey)
-					// 	{
-					// 		updateScreen('0');
-
-					// 	}
-					// }
-					// else if (e.type === 'click')
-					// {
-					// 	//console.log('i was clicked!');
-					// }
-
-
-					//if (e.keyCode === )
 
 					var myTarget = getEventTarget(e);
 
 
-					//updateScreen(myTarget)
+					
 
-					if (myTarget !== 'enter' && myTarget !== null)
-						updateScreen(myTarget);
-					else if (myTarget !== null)
+					if (myTarget == null)
+						return;
+					else if (myTarget === 'enter')
 						submitScreen();
 					else
-						return;
+						updateScreen(myTarget);
 
 					myTarget = "#" + myTarget;
 
@@ -112,6 +97,8 @@ $(document).ready(
 					// 		}
 					// 	}
 					// );
+
+					//TODO 'animate' key/click button depression
 
 
 					// if (myTarget != null)
@@ -236,6 +223,8 @@ $(document).ready(
 
 					//change the button back to the "inactive" color
 					$("#button_enter").css("background-color","lightgray");
+
+					oneSubmit = true;
 				}
 		}
 

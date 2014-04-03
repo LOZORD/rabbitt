@@ -266,3 +266,19 @@ h1
 	vertical-align: middle;
 	width: 586px;
 }
+
+#db_popout
+{
+	text-align: center;
+	margin: 0 auto;
+	background-origin: white;
+	opacity: 1;
+	color: black;
+	font-family: Menlo, monospace;
+	border-radius: 5px;
+	left: 0;
+	padding: 10px;
+	display: inline-block;
+	vertical-align: middle;
+	width: 200px;
+}
