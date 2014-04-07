@@ -84,8 +84,12 @@ $(document).ready(
 						return;
 					else if (myTarget === 'enter')
 						submitScreen();
-					else
+					else if (myTarget === '0' || myTarget === '1')
 						updateScreen(myTarget);
+					else if (myTarget === 'reset')
+						resetScreen();
+					else if (myTarget === 'print')
+						genHTMLScreen();
 
 					myTarget = "#" + myTarget;
 
@@ -289,6 +293,35 @@ $(document).ready(
 				return 'enter';
 			else
 				return null;
+		}
+
+		function resetScreen()
+		{
+			for (var i = 0; i < Math.pow(2, numRowBits); i++)
+			{
+				for (var j = 0; j < Math.pow(2, numColBits); j++)
+				{
+					eArr[i][j].animate({backgroundColor: "red"}, 750);
+				}
+			}
+		}
+
+		function genHTMLScreen()
+		{
+			var screen_data = "";
+
+			for (var i = 0; i < Math.pow(2, numRowBits); i++)
+			{
+				for (var j = 0; j < Math.pow(2, numColBits); j++)
+				{
+					screen_data += ( '[(' + i + ',' + j + ')' + eArr[j][i].css("backgroundColor") + ']');
+				}
+
+				screen_data += "\n";
+			}
+
+			console.log(screen_data);
+
 		}
 
 

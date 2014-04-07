@@ -267,7 +267,7 @@ h1
 	width: 586px;
 }
 
-#db_popout
+#db_addon
 {
 	text-align: center;
 	margin: 0 auto;
@@ -275,10 +275,58 @@ h1
 	opacity: 1;
 	color: black;
 	font-family: Menlo, monospace;
-	border-radius: 5px;
+	border-radius: 0 0 5px 5px;
+	border-top: 3px black solid;
 	left: 0;
 	padding: 10px;
 	display: inline-block;
 	vertical-align: middle;
-	width: 200px;
+	width: 550px;
+	height: 150px;
+}
+
+.fancy
+{
+	font-family: 'Yellowtail' 'Molle',serif; 
+	text-align:left;
+	margin: 0;
+	padding: 15px 10px;
+}
+
+
+
+#button_save
+{
+	background-color: #4ce85c;
+	color: black;
+	float: left;
+}
+
+#button_print
+{
+	background-color: #ffe740;
+	color: black;
+	float: right;
+}
+
+#button_reset
+{
+	background-color: #e83a3f;
+	color: black;
+	float: right;
+
+}
+
+#button_load
+{
+	background-color: #5c78ff;
+	color: black;
+	float: left;
+
+}
+
+#SoM_bar
+{
+	/*float: left;*/
+	/*margin-right: 60px;*/
 }
