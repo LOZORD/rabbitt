@@ -310,6 +310,8 @@ $(document).ready(
 		{
 			var screen_data = "";
 
+			screen_data += "<html><head><title>RABBITT OUTPUT</title>"
+
 			for (var i = 0; i < Math.pow(2, numRowBits); i++)
 			{
 				for (var j = 0; j < Math.pow(2, numColBits); j++)
