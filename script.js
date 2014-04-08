@@ -310,17 +310,25 @@ $(document).ready(
 		{
 			var screen_data = "";
 
-			screen_data += "<html><head><title>RABBITT OUTPUT</title>"
+			//fill with the regular html stuff
+			screen_data += "<html><head><title>RABBITT OUTPUT</title>\ 
+			<style>body{margin:0;padding:0;}.block{width:25vw;height:25vw;float:left;}</style></head><body>"
+
+			//will produce a file >1000 chars
 
 			for (var i = 0; i < Math.pow(2, numRowBits); i++)
 			{
 				for (var j = 0; j < Math.pow(2, numColBits); j++)
 				{
+					//TODO replace with html and color data
 					screen_data += ( '[(' + i + ',' + j + ')' + eArr[j][i].css("backgroundColor") + ']');
 				}
 
 				screen_data += "\n";
 			}
+
+			//end the html file
+			screen_data += "</body></html>";
 
 			console.log(screen_data);
 
