@@ -117,6 +117,16 @@ $(document).ready(
 
 					}
 
+					else if (myTarget === 'save')
+					{
+						saveState();
+					}
+					else if (myTarget === 'load')
+					{
+						alert('unimplemented');
+						//loadState();
+					}
+
 					myTarget = "#" + myTarget;
 
 					// $(document).keydown(function(e2)
@@ -217,7 +227,7 @@ $(document).ready(
 
 			if (myScreen.text().length === binStringLengthMax)
 			{
-				colorizeScreenText(); //####################################################################
+				colorizeScreenText();
 				$("#button_enter").css("background-color","darkgray");
 			}
 		}
@@ -301,9 +311,9 @@ $(document).ready(
 
 		function resetScreen()
 		{
-			for (var i = 0; i < Math.pow(2, numRowBits); i++)
+			for (var i = 0; i < rowLength; i++)
 			{
-				for (var j = 0; j < Math.pow(2, numColBits); j++)
+				for (var j = 0; j < colLength; j++)
 				{
 					eArr[i][j].animate({backgroundColor: "red"}, 750);
 				}
@@ -358,9 +368,9 @@ $(document).ready(
 			//flashMessage("printing...");
 
 			//could be buggin depending on the f'ed up eArr
-			var blockWidth = 100.0 / (Math.pow(2, numRowBits));
+			var blockWidth = 100.0 / rowLength);
 
-			var blockHeight = 100.0 / (Math.pow(2, numColBits));
+			var blockHeight = 100.0 / colLength);
 
 			//fill with the regular html stuff
 			screen_data += "<html><head><title>RABBITT OUTPUT</title>";
@@ -371,11 +381,11 @@ $(document).ready(
 
 			//will produce a file >1000 chars
 
-			for (var i = 0; i < Math.pow(2, numRowBits); i++)
+			for (var i = 0; i < rowLength; i++)
 			{
 				screen_data += '<div class="row">\n';
 
-				for (var j = 0; j < Math.pow(2, numColBits); j++)
+				for (var j = 0; j < colLength; j++)
 				{
 					//TODO replace with html and color data
 					//screen_data += ( '[(' + i + ',' + j + ')' + eArr[j][i].css("backgroundColor") + ']');
@@ -499,7 +509,7 @@ $(document).ready(
 
 			//var someBlock = eArr[eCol][eRow];
 
-			console.log(someBlock);
+			//console.log(someBlock);
 
 			var blockText = someBlock.find('span');
 
@@ -519,15 +529,37 @@ $(document).ready(
   		//TODO save func
   		function saveState()
   		{
-  			console.log('Are you attaching this functio to an event?');
+  			//console.log('Are you attaching this functio to an event?');
   			console.log("SAVE THIS IP ADDR: " + userIpAddr);
+
+
+  			var textToSave = "";
+
+  			for (var row in eArr)
+  			{
+  				//textToSave += '[';
+
+  				for (var col in eArr[row])
+  				{
+  					//textToSave += ( eArr[col][row].css('backgroundColor') + ' , ');
+
+  					//console.log('r' + row + 'c' + col + '...' + eArr[col][row].css('backgroundColor'));
+
+  					textToSave += ('[' + row + '][' +  col + ']' + eArr[col][row].css('backgroundColor') + ' | ');
+  				}
+
+  				//textToSave += ']';
+  			}
+
+  			//console.log("\n\n" + textToSave);
+
   		}
 
   		//TODO load function
   		function loadState()
   		{
   			console.log('Are you attaching this functio to an event?');
-  			
+
   		}
 
 
