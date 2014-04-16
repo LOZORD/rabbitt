@@ -1,5 +1,15 @@
 $(document).ready(
 
+
+	/* TODO
+		-- add save
+		-- make db
+			-store gen'd html doc string
+			-store user's ip addr
+			-store along with index
+		-- add load
+	*/
+
 	function()
 	{
 		//the array of grid elements
@@ -13,9 +23,13 @@ $(document).ready(
 		//the screen variable
 		var myScreen = $("#screen");
 
-		const numRowBits = 2;
+		const numRowBits = 2; // = log2(eArr[0].length)
 
-		const numColBits = 2;
+		const numColBits = 2; // = log2(eArr.length)
+
+		const rowLength = Math.pow(2, numRowBits);
+
+		const colLength = Math.pow(2, numColBits);
 
 		//must be a positive number divisible by 3
 		//const numClrBits = 3;
@@ -34,10 +48,23 @@ $(document).ready(
 		const enterKey = 13;
 
 		var guideGone = false;
+		var holdGuide = false;
 
 		const downTime = 500;
 
 		var oneSubmit = false;
+
+		var userIpAddr = null;
+
+
+		//TODO use this to save ip addr in a clever way of logining in!!!
+		//basically we want to have a db that maps ip addrs to strings that are the generated html from the screen
+		$.getJSON("http://jsonip.appspot.com?callback=?",
+    		function(data){
+       			//console.log( "Your ip: " + data.ip);
+       			userIpAddr = data.ip;
+  			}
+  		);
 
 
 		$("#amntColors").text(Math.pow(2, numClrBits));
@@ -47,28 +74,6 @@ $(document).ready(
 		$("#numColBits").text(numColBits);
 		$("#numClrBits").text(numClrBits);
 
-		// $('#button0').click(
-		// 	function()
-		// 	{
-		// 		updateScreen("0");
-		// 	}
-		// );
-
-		// $('#button1').click(
-		// 	function()
-		// 	{
-		// 		updateScreen("1");
-		// 	}
-		// );
-
-
-		// $("#button_enter").click(
-		// 	function()
-		// 	{
-		// 		submitScreen();
-				
-		// 	}
-		// );
 
 		$(document).on('keydown click', function(e) 
 			{
@@ -89,7 +94,28 @@ $(document).ready(
 					else if (myTarget === 'reset')
 						resetScreen();
 					else if (myTarget === 'print')
-						genHTMLScreen();
+					{
+						var output = genHTMLScreen();
+
+						$('#guide').text(output);
+						//$('#guideMsg').text('HELLO');
+
+
+						$('#guide').prepend('<span style="color:gray;">---<br/><br/>Your RABBITT printout...<br/>\
+							<span id="print_closer"> < CLICK HERE TO CLOSE > </span><br/><br/>---<br/></span>');
+
+
+						$('#guide_ctr').show('slide', {}, 1000);
+
+						$('#print_closer').click(
+							function()
+							{
+								$('#guide_ctr').hide('slide', {}, 1000);
+							}
+						);
+
+
+					}
 
 					myTarget = "#" + myTarget;
 
@@ -119,14 +145,20 @@ $(document).ready(
 			}
 		);
 
-		$("#guide_ctr").click(fadeGuide);
+		
+		$("#guide_ctr").click
+		(
+			function fadeGuide()
+			{
+				if (!guideGone)
+				{
+					$("#guide_ctr").hide("slide", {}, 1000);
 
-		function fadeGuide()
-		{
-			$("#guide_ctr").hide("slide", {}, 1000);
-
-			guideGone = true;
-		}
+					guideGone = true;
+				}
+			}
+		);
+		
 
 		$(".block").mouseenter
 		(
@@ -178,15 +210,16 @@ $(document).ready(
 		function updateScreen(bit)
 		{
 
-
-
 			if (myScreen.text().length < binStringLengthMax)
 				myScreen.append(bit);
 			else
 				myScreen.text(myScreen.text().substr(1) + bit);
 
 			if (myScreen.text().length === binStringLengthMax)
+			{
+				colorizeScreenText(); //####################################################################
 				$("#button_enter").css("background-color","darkgray");
+			}
 		}
 
 		//used for hovering over blocks to show their binary data value
@@ -232,23 +265,6 @@ $(document).ready(
 				}
 		}
 
-		//TODO make keyboard input
-
-
-		// $(document).keydown(
-		// 	function(event)
-		// 	{
-		// 		if (guideGone)
-		// 		{
-		// 			if(event.which === zeroKey)
-		// 				updateScreen("0");
-		// 			if(event.which === oneKey)
-		// 				updateScreen("1");
-		// 			if(event.which === enterKey)
-		// 				submitScreen();
-		// 		}
-		// 	}
-		// );
 
 		function getEventTarget(e)
 		{
@@ -257,24 +273,12 @@ $(document).ready(
 
 			if (e.type === 'keydown')
 			{
-				// if (e.keyCode === zeroKey)
-				// 	return '0';
-				// else if (e.keyCode === oneKey)
-				// 	return '1';
-				// else if (e.keyCode === enterKey)
-				// 	return 'enter';
-
 				return determineKey(e);
 			}
 
 			//they must have clicked
 			else if (e.type === 'click' && (e.toElement.className.search('clickBtn') > 1))
 			{
-				//var btnName = "#";
-
-				//btnName += e.toElement.id;
-
-				//console.log(e.toElement.innerText.toLowerCase() + " was clicked!");
 
 				return e.toElement.innerText.toLowerCase();
 			}
@@ -306,25 +310,81 @@ $(document).ready(
 			}
 		}
 
+		// function flashMessage(msg)
+		// {
+		// 	var theScreen = $('#screen');
+
+		// 	var saveText = theScreen.text();
+
+		// 	// var endTime = Date.now() + 2500;
+
+		// 	//theScreen.animate({content: "msg"}, 2500);
+
+
+		// 	// while (Date.now() != endTime)
+		// 	// {
+				
+		// 	// }
+
+
+		// 	//theScreen.animate()
+
+		// 	//theScreen.text(msg);
+
+
+		// 	// theScreen.animate({}, 4000,
+		// 	// 	function ()
+		// 	// 	{
+		// 	// 		theScreen.text(msg);
+		// 	// 	}
+		// 	// );
+
+
+		// 	// //theScreen.text(saveText);
+
+		// 	// theScreen.animate({}, 4000,
+		// 	// 	function()
+		// 	// 	{
+		// 	// 		theScreen.text(saveText);
+		// 	// 	}
+		// 	// );
+
+		// }
+
 		function genHTMLScreen()
 		{
 			var screen_data = "";
 
+			//flashMessage("printing...");
+
+			//could be buggin depending on the f'ed up eArr
+			var blockWidth = 100.0 / (Math.pow(2, numRowBits));
+
+			var blockHeight = 100.0 / (Math.pow(2, numColBits));
+
 			//fill with the regular html stuff
-			screen_data += "<html><head><title>RABBITT OUTPUT</title>\ 
-			<style>body{margin:0;padding:0;}.block{width:25vw;height:25vw;float:left;}</style></head><body>"
+			screen_data += "<html><head><title>RABBITT OUTPUT</title>";
+			screen_data += "<style>\nbody{margin:0;padding:0;}\n.block{width:" + blockWidth + "vw;height:" + blockHeight + "vw;float:left;}</style></head><body>";
+
+
+			//<div class="block" style="background-color:black;"></div>
 
 			//will produce a file >1000 chars
 
 			for (var i = 0; i < Math.pow(2, numRowBits); i++)
 			{
+				screen_data += '<div class="row">\n';
+
 				for (var j = 0; j < Math.pow(2, numColBits); j++)
 				{
 					//TODO replace with html and color data
-					screen_data += ( '[(' + i + ',' + j + ')' + eArr[j][i].css("backgroundColor") + ']');
+					//screen_data += ( '[(' + i + ',' + j + ')' + eArr[j][i].css("backgroundColor") + ']');
+					screen_data += '<div class="block" style="background-color:' + eArr[j][i].css("backgroundColor") + ';"></div>\n';
+
 				}
 
-				screen_data += "\n";
+				//screen_data += "\n";
+				screen_data += '</div>\n';
 			}
 
 			//end the html file
@@ -332,7 +392,143 @@ $(document).ready(
 
 			console.log(screen_data);
 
+			//alert('Check your console!');
+
+			return screen_data;
+
 		}
+
+
+		function download(filename, text)
+		{
+			alert('unimplemented!');
+		}
+
+
+
+  		function colorizeScreenText()
+  		{
+  			//for(var someChar in )
+  			// myScreen.each(
+  			// );
+
+			//split text into single chars
+			//wrap indexed bits in spans for row, col, red, green, blue
+
+			var str = myScreen.text();
+
+			//TODO check that these values are legit
+			var rowStr = str.substr(0, numRowBits);
+			var colStr = str.substr(numRowBits, numColBits);
+			
+			//get the entire color segment
+
+			//var aColor = parseInt(str.substr(numRowBits+numColBits), 2);
+
+			/* option one, rgb string always R, G, B */
+			
+			/*
+			var rgbStr = str.substr(numRowBits + numColBits);
+
+			var redStr = rgbStr.substr(0, eachClrBit);
+			var grnStr = rgbStr.substr(eachClrBit, eachClrBit);
+			var bluStr = rgbStr.substr(2 * eachClrBit);
+			*/
+
+			/* option two, rgb string as rgb color */
+			
+
+			var rgbStr = str.substr(numRowBits + numColBits);
+
+			var redAmnt = rgbNormalize(parseInt(rgbStr.substr(0, eachClrBit), 2));
+			var grnAmnt = rgbNormalize(parseInt(rgbStr.substr(eachClrBit, eachClrBit), 2));
+			var bluAmnt = rgbNormalize(parseInt(rgbStr.substr(2*eachClrBit), 2));
+
+			var toRGBString = "rgb(" + redAmnt + "," + grnAmnt + "," + bluAmnt + ")";
+
+			//then sub in this line for the individual colors
+
+			//retStr += '<span style="color: ' + toRGBString + ';">' + rgbStr + '</span>';
+
+			
+
+
+
+			var retStr = '<span style="color:white;">' + rowStr + '</span>';
+
+			retStr += '<span style="color:black;">' + colStr + '</span>';
+
+			retStr += '<span style="color: ' + toRGBString + ';">' + rgbStr + '</span>';
+
+
+			//retStr += '<span style="color:red;">' + redStr + '</span>'; //UNCOMMENT FOR OPTION ONE
+
+			//retStr += '<span style="color:green;">' + grnStr + '</span>'; //
+
+			//retStr += '<span style="color:blue;">' + bluStr + '</span>'; //
+
+
+			//console.log(retStr);
+
+			// var redAmnt = rgbNormalize(parseInt(rgbStr.substr(0, eachClrBit), 2));
+			// var grnAmnt = rgbNormalize(parseInt(rgbStr.substr(eachClrBit, eachClrBit), 2));
+			// var bluAmnt = rgbNormalize(parseInt(rgbStr.substr(2*eachClrBit), 2));
+
+			// var toRGBString = "rgb(" + redAmnt + "," + grnAmnt + "," + bluAmnt + ")";
+
+			// eArr[rowNum][colNum].animate({backgroundColor: toRGBString}, 750);
+
+			//return retStr;
+
+			myScreen.html(retStr);
+
+
+
+
+			//TODO make box value id appear tooooooooo
+
+			var eRow = parseInt(rowStr, 2);
+			var eCol = parseInt(colStr ,2);
+
+			//var blockNum = ()
+
+			var someBlock = eArr[eCol][eRow];//eArr[eRow/4][]
+
+			//console.log(eRow + ' row , ' + eCol + ' col');
+
+
+			//var someBlock = eArr[eCol][eRow];
+
+			console.log(someBlock);
+
+			var blockText = someBlock.find('span');
+
+
+			//use toBinaryString
+			blockText.text(toBinaryString($(someBlock)));
+			blockText.css({backgroundColor: "white", color: "black", opacity: 1, fontFamily: "Menlo, monospace"}).delay(500).fadeTo(500,0);
+			//blockText.fadeToggle(2000);
+			//blockText.fadeToggle(500).delay(500);
+
+			//someBlock.focus();
+			//blockText.toggle(2000);
+
+			
+  		}
+
+  		//TODO save func
+  		function saveState()
+  		{
+  			console.log('Are you attaching this functio to an event?');
+  			console.log("SAVE THIS IP ADDR: " + userIpAddr);
+  		}
+
+  		//TODO load function
+  		function loadState()
+  		{
+  			console.log('Are you attaching this functio to an event?');
+  			
+  		}
 
 
 	}

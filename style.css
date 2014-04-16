@@ -36,6 +36,7 @@ h1
 	z-index: 0;
 	position: relative;
 	text-align: center;
+	border-radius: 10px;
 }
 
 /*.box:before
@@ -53,6 +54,7 @@ h1
 	z-index: 5;
 	margin: 5px 5px 0 5px;
 	position: absolute;
+	border-radius: 10px;
 	/*left: 28%;*/
 }
 
@@ -275,14 +277,15 @@ h1
 	opacity: 1;
 	color: black;
 	font-family: Menlo, monospace;
-	border-radius: 0 0 5px 5px;
-	border-top: 3px black solid;
+	border-radius: 0 0 10px 10px;
+	/*border-top: 3px black solid;*/
 	left: 0;
 	padding: 10px;
 	display: inline-block;
 	vertical-align: middle;
 	width: 550px;
 	height: 150px;
+	background-color: #949494;
 }
 
 .fancy
