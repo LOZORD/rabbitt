@@ -320,46 +320,9 @@ $(document).ready(
 			}
 		}
 
+		//
 		// function flashMessage(msg)
-		// {
-		// 	var theScreen = $('#screen');
-
-		// 	var saveText = theScreen.text();
-
-		// 	// var endTime = Date.now() + 2500;
-
-		// 	//theScreen.animate({content: "msg"}, 2500);
-
-
-		// 	// while (Date.now() != endTime)
-		// 	// {
-				
-		// 	// }
-
-
-		// 	//theScreen.animate()
-
-		// 	//theScreen.text(msg);
-
-
-		// 	// theScreen.animate({}, 4000,
-		// 	// 	function ()
-		// 	// 	{
-		// 	// 		theScreen.text(msg);
-		// 	// 	}
-		// 	// );
-
-
-		// 	// //theScreen.text(saveText);
-
-		// 	// theScreen.animate({}, 4000,
-		// 	// 	function()
-		// 	// 	{
-		// 	// 		theScreen.text(saveText);
-		// 	// 	}
-		// 	// );
-
-		// }
+		//
 
 		function genHTMLScreen()
 		{
@@ -418,35 +381,12 @@ $(document).ready(
 
   		function colorizeScreenText()
   		{
-  			//for(var someChar in )
-  			// myScreen.each(
-  			// );
-
-			//split text into single chars
-			//wrap indexed bits in spans for row, col, red, green, blue
 
 			var str = myScreen.text();
 
-			//TODO check that these values are legit
+			
 			var rowStr = str.substr(0, numRowBits);
 			var colStr = str.substr(numRowBits, numColBits);
-			
-			//get the entire color segment
-
-			//var aColor = parseInt(str.substr(numRowBits+numColBits), 2);
-
-			/* option one, rgb string always R, G, B */
-			
-			/*
-			var rgbStr = str.substr(numRowBits + numColBits);
-
-			var redStr = rgbStr.substr(0, eachClrBit);
-			var grnStr = rgbStr.substr(eachClrBit, eachClrBit);
-			var bluStr = rgbStr.substr(2 * eachClrBit);
-			*/
-
-			/* option two, rgb string as rgb color */
-			
 
 			var rgbStr = str.substr(numRowBits + numColBits);
 
@@ -456,74 +396,29 @@ $(document).ready(
 
 			var toRGBString = "rgb(" + redAmnt + "," + grnAmnt + "," + bluAmnt + ")";
 
-			//then sub in this line for the individual colors
-
-			//retStr += '<span style="color: ' + toRGBString + ';">' + rgbStr + '</span>';
-
-			
-
-
-
 			var retStr = '<span style="color:white;">' + rowStr + '</span>';
 
 			retStr += '<span style="color:black;">' + colStr + '</span>';
 
 			retStr += '<span style="color: ' + toRGBString + ';">' + rgbStr + '</span>';
 
-
-			//retStr += '<span style="color:red;">' + redStr + '</span>'; //UNCOMMENT FOR OPTION ONE
-
-			//retStr += '<span style="color:green;">' + grnStr + '</span>'; //
-
-			//retStr += '<span style="color:blue;">' + bluStr + '</span>'; //
-
-
-			//console.log(retStr);
-
-			// var redAmnt = rgbNormalize(parseInt(rgbStr.substr(0, eachClrBit), 2));
-			// var grnAmnt = rgbNormalize(parseInt(rgbStr.substr(eachClrBit, eachClrBit), 2));
-			// var bluAmnt = rgbNormalize(parseInt(rgbStr.substr(2*eachClrBit), 2));
-
-			// var toRGBString = "rgb(" + redAmnt + "," + grnAmnt + "," + bluAmnt + ")";
-
-			// eArr[rowNum][colNum].animate({backgroundColor: toRGBString}, 750);
-
-			//return retStr;
-
 			myScreen.html(retStr);
 
-
-
-
-			//TODO make box value id appear tooooooooo
 
 			var eRow = parseInt(rowStr, 2);
 			var eCol = parseInt(colStr ,2);
 
-			//var blockNum = ()
 
 			var someBlock = eArr[eCol][eRow];//eArr[eRow/4][]
 
-			//console.log(eRow + ' row , ' + eCol + ' col');
-
-
-			//var someBlock = eArr[eCol][eRow];
-
-			//console.log(someBlock);
+			
 
 			var blockText = someBlock.find('span');
 
-
-			//use toBinaryString
 			blockText.text(toBinaryString($(someBlock)));
+
 			blockText.css({backgroundColor: "white", color: "black", opacity: 1, fontFamily: "Menlo, monospace"}).delay(500).fadeTo(500,0);
-			//blockText.fadeToggle(2000);
-			//blockText.fadeToggle(500).delay(500);
 
-			//someBlock.focus();
-			//blockText.toggle(2000);
-
-			
   		}
 
   		//TODO save func
@@ -552,6 +447,18 @@ $(document).ready(
   			}
 
   			//console.log("\n\n" + textToSave);
+
+
+  			//$.post()
+
+  			// var postObj = new Object();
+
+  			// postObj.type = 'POST';
+  			// postObj.url = 'HALP';
+  			// postObj.
+
+
+  			
 
   		}
 
