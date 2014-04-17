@@ -331,7 +331,7 @@ $(document).ready(
 			//flashMessage("printing...");
 
 			//could be buggin depending on the f'ed up eArr
-			var blockWidth = 100.0 / rowLength);
+			var blockWidth = 100.0 / rowLength;
 
 			var blockHeight = 100.0 / colLength);
 
