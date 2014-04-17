@@ -333,7 +333,7 @@ $(document).ready(
 			//could be buggin depending on the f'ed up eArr
 			var blockWidth = 100.0 / rowLength;
 
-			var blockHeight = 100.0 / colLength);
+			var blockHeight = 100.0 / colLength;
 
 			//fill with the regular html stuff
 			screen_data += "<html><head><title>RABBITT OUTPUT</title>";
