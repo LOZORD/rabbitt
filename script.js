@@ -123,8 +123,9 @@ $(document).ready(
 					}
 					else if (myTarget === 'load')
 					{
-						alert('unimplemented');
+						//alert('unimplemented');
 						//loadState();
+						loadState();
 					}
 
 					myTarget = "#" + myTarget;
@@ -363,7 +364,7 @@ $(document).ready(
 			//end the html file
 			screen_data += "</body></html>";
 
-			console.log(screen_data);
+			//console.log(screen_data);
 
 			//alert('Check your console!');
 
@@ -425,7 +426,7 @@ $(document).ready(
   		function saveState()
   		{
   			//console.log('Are you attaching this functio to an event?');
-  			console.log("SAVE THIS IP ADDR: " + userIpAddr);
+  			//console.log("SAVE THIS IP ADDR: " + userIpAddr);
 
 
   			var textToSave = "";
@@ -458,14 +459,54 @@ $(document).ready(
   			// postObj.
 
 
+  			//save data here/////////
+
+  			// var xmlhttp;
   			
+  			// if (window.XMLHttpRequest)
+  			// {
+  			// 	xmlhttp = new XMLHttpRequest();
+  			// }
+  			// else
+  			// {
+  			// 	xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+  			// }
+
+  			// xmlhttp.open('POST', "saveData.php?", true);
+
+  			//var posting = $.post("saveData.php", {ip_addr: userIpAddr, data: textToSave});
+
+  			// posting.done(
+  			// 	function()
+  			// 	{
+  			// 		alert("db posting success!");
+  			// 	}
+  			// );
+
+  			//alert('use cookies instead!');
+
+
+
+
+  			//WRITE TO THE COOKIE
+  			docCookies.setItem('RABBITT_save_data', textToSave, new Date(0x7fffffff * 1e3));
+
+  			//console.log('set cookie!')
+
 
   		}
 
   		//TODO load function
   		function loadState()
   		{
-  			console.log('Are you attaching this functio to an event?');
+  			//console.log(docCookies.getItem('RABBITT_save_data'));
+
+  			var cookieFetchRes = docCookies.getItem('RABBITT_save_data');
+
+  			if (cookieFetchRes === null)
+  				return;
+
+  			//decode the result
 
   		}
 

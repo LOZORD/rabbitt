@@ -2,6 +2,7 @@
 body
 {
 	/*background-color: #6E2717;*/
+	/* maybe this color but noisy might be good! -- see noise_bg.png */
 	background-color: #BF8F64; /* #FFBF85; */
 	margin: 0 auto;
 	font-family: Big Caslon, cursive;
