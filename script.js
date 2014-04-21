@@ -123,33 +123,10 @@ $(document).ready(
 					}
 					else if (myTarget === 'load')
 					{
-						//alert('unimplemented');
-						//loadState();
 						loadState();
 					}
 
 					myTarget = "#" + myTarget;
-
-					// $(document).keydown(function(e2)
-					// 	{
-					// 		while(determineKey(e2) === myTarget)
-					// 		{
-					// 			$(myTarget)...
-					// 		}
-					// 	}
-					// );
-
-					//TODO 'animate' key/click button depression
-
-
-					// if (myTarget != null)
-					// {
-
-					// }
-
-					// if (myTarget != null)
-					// 	console.log(myTarget + " booyah");
-
 
 				}
 				//console.log(e);
@@ -372,7 +349,7 @@ $(document).ready(
 
 		}
 
-
+		//GARBAGE!
 		function download(filename, text)
 		{
 			alert('unimplemented!');
@@ -429,11 +406,12 @@ $(document).ready(
   			//console.log("SAVE THIS IP ADDR: " + userIpAddr);
 
 
-  			var textToSave = "";
+  			var textToSave = '';
 
   			for (var row in eArr)
   			{
-  				//textToSave += '[';
+  				//use curly braces to signify rows
+  				//textToSave += '';
 
   				for (var col in eArr[row])
   				{
@@ -441,57 +419,24 @@ $(document).ready(
 
   					//console.log('r' + row + 'c' + col + '...' + eArr[col][row].css('backgroundColor'));
 
-  					textToSave += ('[' + row + '][' +  col + ']' + eArr[col][row].css('backgroundColor') + ' | ');
+  					//textToSave += ('[' + row + '][' +  col + ']' + eArr[col][row].css('backgroundColor') + ' | ');
+
+  					textToSave += (eArr[col][row].css('backgroundColor') + '|')
+
   				}
 
-  				//textToSave += ']';
+  				//textToSave += '}';
   			}
+
+  			//textToSave += '>';
 
   			//console.log("\n\n" + textToSave);
 
-
-  			//$.post()
-
-  			// var postObj = new Object();
-
-  			// postObj.type = 'POST';
-  			// postObj.url = 'HALP';
-  			// postObj.
-
-
-  			//save data here/////////
-
-  			// var xmlhttp;
-  			
-  			// if (window.XMLHttpRequest)
-  			// {
-  			// 	xmlhttp = new XMLHttpRequest();
-  			// }
-  			// else
-  			// {
-  			// 	xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-  			// }
-
-  			// xmlhttp.open('POST', "saveData.php?", true);
-
-  			//var posting = $.post("saveData.php", {ip_addr: userIpAddr, data: textToSave});
-
-  			// posting.done(
-  			// 	function()
-  			// 	{
-  			// 		alert("db posting success!");
-  			// 	}
-  			// );
-
-  			//alert('use cookies instead!');
-
-
-
-
   			//WRITE TO THE COOKIE
+  			//Save cookies until "the end of time"
   			docCookies.setItem('RABBITT_save_data', textToSave, new Date(0x7fffffff * 1e3));
 
-  			//console.log('set cookie!')
+  			console.log('set cookie!')
 
 
   		}
@@ -501,12 +446,64 @@ $(document).ready(
   		{
   			//console.log(docCookies.getItem('RABBITT_save_data'));
 
+  			console.log('loading cookie!');
+
   			var cookieFetchRes = docCookies.getItem('RABBITT_save_data');
 
+
+
+  			//if the user hasn't previously saved their data
   			if (cookieFetchRes === null)
   				return;
 
-  			//decode the result
+
+  			//var fetchString = new String(cookieFetchRes);
+
+  			//assuming we've recieved some type of cookie...
+
+  			//console.log(cookieFetchRes);
+
+  			// console.log(typeof cookieFetchRes);
+
+  			// console.log('gerald!');
+
+  			cookieFetchRes.trim();
+
+
+  			// console.log(fetchString.search('|'));
+
+
+
+  			// if (!fetchString.contains('rgb'))
+  			// {
+  			// 		console.log('salty dog!');
+  			// 		return;
+  			// }
+
+  			//assume the cookie is valid, decode the result
+  			//limit splitting to the number of elements in eArr
+  			var decodeArr = cookieFetchRes.split('|', rowLength * colLength);
+
+  			console.log('split cookie!');
+
+  			// for (var i in decodeArr)
+  			// 	console.log(decodeArr[i]);
+
+  			var i = 0;
+
+  			for (var row in eArr)
+  			{
+  				for (var col in eArr[row])
+  				{
+  					//eArr[row][col].css('backgroundColor');
+  					//make code less redundant -- see updateBox func above
+					eArr[col][row].animate({backgroundColor: decodeArr[i++]}, 750);
+
+  				}
+  			}
+
+
+
 
   		}
 
