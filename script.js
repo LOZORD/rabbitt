@@ -2,17 +2,14 @@ $(document).ready(
 
 
 	/* TODO
-		-- add save
-		-- make db
-			-store gen'd html doc string
-			-store user's ip addr
-			-store along with index
-		-- add load
+		-- make code less janky i.e. refactor
+		-- make row/col conflict and weird html less janky
 	*/
 
 	function()
 	{
 		//the array of grid elements
+
 		var eArr = 	[
 						[$("#e0"), $("#e1"), $("#e2"), $("#e3")],
 						[$("#e4"), $("#e5"), $("#e6"), $("#e7")],
@@ -23,7 +20,7 @@ $(document).ready(
 		//the screen variable
 		var myScreen = $("#screen");
 
-		const numRowBits = 2; // = log2(eArr[0].length)
+		const numRowBits = 2; // = log2(eArr[0].length) //TODO -- make code more dynamic
 
 		const numColBits = 2; // = log2(eArr.length)
 
@@ -38,34 +35,23 @@ $(document).ready(
 
 		const eachClrBit = 2;
 
+		//multiply for {Red, Green, Blue}
 		const numClrBits = eachClrBit * 3;
 
 		//the current length of the binary string accepted
 		const binStringLengthMax = numRowBits + numColBits + numClrBits;
 
+		/* KEY CODES */
 		const zeroKey = 48;
 		const oneKey = 49;
 		const enterKey = 13;
 
+		//slideover appearance booleans
 		var guideGone = false;
 		var holdGuide = false;
 
-		const downTime = 500;
-
+		//XXX needed?
 		var oneSubmit = false;
-
-		var userIpAddr = null;
-
-
-		//TODO use this to save ip addr in a clever way of logining in!!!
-		//basically we want to have a db that maps ip addrs to strings that are the generated html from the screen
-		$.getJSON("http://jsonip.appspot.com?callback=?",
-    		function(data){
-       			//console.log( "Your ip: " + data.ip);
-       			userIpAddr = data.ip;
-  			}
-  		);
-
 
 		$("#amntColors").text(Math.pow(2, numClrBits));
 		$("#binStrLen").text(binStringLengthMax);
@@ -75,24 +61,28 @@ $(document).ready(
 		$("#numClrBits").text(numClrBits);
 
 
+		//the main user input function
+		//active on keyboard or click input
 		$(document).on('keydown click', function(e) 
 			{
+				//only accept input once the starting guide is gone
 				if(guideGone)
 				{
 
+					//get the particular event
 					var myTarget = getEventTarget(e);
-
-
-					
 
 					if (myTarget == null)
 						return;
 					else if (myTarget === 'enter')
 						submitScreen();
+					//the user entered a one or a zero
+					//either via kb or clicking the buttons
 					else if (myTarget === '0' || myTarget === '1')
 						updateScreen(myTarget);
 					else if (myTarget === 'reset')
 						resetScreen();
+					//TODO make own function!!!
 					else if (myTarget === 'print')
 					{
 						var output = genHTMLScreen();
@@ -126,6 +116,7 @@ $(document).ready(
 						loadState();
 					}
 
+					//XXX use?
 					myTarget = "#" + myTarget;
 
 				}
@@ -133,7 +124,7 @@ $(document).ready(
 			}
 		);
 
-		
+		//the user clicks to hide the guide
 		$("#guide_ctr").click
 		(
 			function fadeGuide()
@@ -191,10 +182,21 @@ $(document).ready(
 
 			var toRGBString = "rgb(" + redAmnt + "," + grnAmnt + "," + bluAmnt + ")";
 
-			eArr[rowNum][colNum].animate({backgroundColor: toRGBString}, 750);
+			//eArr[rowNum][colNum].animate({backgroundColor: toRGBString}, 750);
+			setScreenElement(rowNum,colNum, toRGBString);
 		}
 
 		//updates the binary entry screen at the bottom of the toy
+
+		function setScreenElement(rowNum, colNum, color, time)
+		{
+			//set 750 ms as the default
+			if (typeof(time)==='undefined') time = 750;
+
+			eArr[rowNum][colNum].animate( {backgroundColor : color} , time );
+		}
+
+
 		function updateScreen(bit)
 		{
 
@@ -497,7 +499,8 @@ $(document).ready(
   				{
   					//eArr[row][col].css('backgroundColor');
   					//make code less redundant -- see updateBox func above
-					eArr[col][row].animate({backgroundColor: decodeArr[i++]}, 750);
+					//eArr[col][row].animate({backgroundColor: decodeArr[i++]}, 750);
+					setScreenElement(col ,row, decodeArr[i++]);
 
   				}
   			}
