@@ -304,6 +304,8 @@ h1
 #logo
 {
 	font-size: 2.25em;
+	color: #949494;
+	text-align: center;
 }
 
 
@@ -341,4 +343,13 @@ h1
 {
 	/*float: left;*/
 	/*margin-right: 60px;*/
+}
+
+#closer
+{
+	font-size: 2em;
+	color: gray;
+	text-align: right;
+	position: relative;
+	right: 0;
 }

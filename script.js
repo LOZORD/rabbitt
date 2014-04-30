@@ -3,7 +3,7 @@ $(document).ready(
 
 	/* TODO
 	-- make row/col conflict and weird html less janky
-    -- add x button for overlays
+    xx add x button for overlays
     xx bigger button font
     xx change background
     -- feedback for partial strings
@@ -276,14 +276,15 @@ $(document).ready(
             $('#guide').text(output);
 
             //prepend a close message
-            $('#guide').prepend('<span style="color:gray;">---<br/><br/>Your RABBITT printout...<br/>\
-                <span id="print_closer"> < CLICK HERE TO CLOSE > </span><br/><br/>---<br/></span>');
+            //$('#guide').prepend('<span style="color:gray;">---<br/><br/>Your RABBITT printout...<br/>\
+            //    <span id="print_closer"> < CLICK HERE TO CLOSE > </span><br/><br/>---<br/></span>');
+            $('#guide').prepend('<div id="closer">&times;</div>');
 
             //slide out the guide
             $('#guide_ctr').show('slide', {}, 1000);
 
             //slide away the guide when the user clicks
-            $('#print_closer').click
+            $('#closer').click
             (
                 function()
                 {
