@@ -58,11 +58,19 @@ $(document).ready(
         const resetCode = 'rset';
         const bckspCode = 'back';
         const printCode = 'prnt';
-        const _saveCode = 'save';
-        const _loadCode = 'load';
+        const saveCode = 'save';
+        const loadCode = 'load';
 
         const code0 = '0';
         const code1 = '1';
+
+        const screenClr = 'tan';
+        const saveClr = '#4ce85c';
+        const loadClr = '#5c78ff';
+        const printClr = '#ffe740';
+        const resetClr = '#e83a3f';
+        //const submitClr = '';
+        const notEnoughInputClr = 'black';
 
 
 		//slideover appearance booleans
@@ -105,13 +113,12 @@ $(document).ready(
 					else if (myTarget === resetCode)
 						resetScreen();
 					else if (myTarget === printCode)
-                        printCall();
-					else if (myTarget === _saveCode)
+                        printState();
+					else if (myTarget === saveCode)
 						saveState();
-					else if (myTarget === _loadCode)
+					else if (myTarget === loadCode)
 						loadState();
                     //otherwise, do nothing
-
 				}
 			}
 		);
@@ -176,6 +183,8 @@ $(document).ready(
 
 			//eArr[rowNum][colNum].animate({backgroundColor: toRGBString}, 750);
 			setScreenElement(rowNum,colNum, toRGBString);
+
+            return toRGBString;
 		}
 
 		//updates the binary entry screen at the bottom of the toy
@@ -202,6 +211,8 @@ $(document).ready(
 				colorizeScreenText();
 				$("#button_enter").css("background-color","darkgray");
 			}
+
+            //flashScreen(submitColor);
 		}
 
 		//used for hovering over blocks to show their binary data value
@@ -255,7 +266,8 @@ $(document).ready(
 			if (myScreen.text().length === binStringLengthMax)
 				{
 					//push the current binary screen to make changes
-					updateBox(myScreen.text());
+                    //get the color the user submits!
+					var userColor = updateBox(myScreen.text());
 
 					//then, empty the screen
 					myScreen.text("");
@@ -264,12 +276,22 @@ $(document).ready(
 					$("#button_enter").css("background-color","lightgray");
 
 					// oneSubmit = true; XXX
+                    flashScreen(userColor);
 				}
+            else
+            {
+                //user did not read directions
+                //myScreen.animate({backgroundColor: 'white'}, 350).animate({backgroundColor})
+                flashScreen(notEnoughInputClr);
+                //myScreen.animate({backgroundColor: 'tan'}, 350);
+            }
 		}
 
-        function printCall()
+        function printState()
         {
             //get the eArr data in HTML form and set it to the guide's text
+
+            flashScreen(printClr);
 
             var output = genHTMLScreen();
 
@@ -337,11 +359,47 @@ $(document).ready(
 					eArr[i][j].animate({backgroundColor: "red"}, 750);
 				}
 			}
+
+            flashScreen(resetClr);
 		}
 
 		//
 		// function flashMessage(msg)
 		//
+
+        function flashScreen(someColor)
+        {
+            //console.log("eagle?");
+            //hardcoded at 350
+            // myScreen.animate
+            // (
+            //     {backgroundColor: someColor},
+            //     350,
+            //     'swing',
+            //     flashHelper
+            // );
+            //myScreen.animate({backgroundColor: 'tan'}, 350);
+            
+
+            // myScreen.animate({backgroundColor: someColor}, 350);
+            // myScreen.queue(flashHelper(screenClr));
+
+            //myScreen.animate({backgroundColor: screenClr}, flashHelper(someColor));
+            
+
+            myScreen.effect("highlight", {color: someColor});
+            
+            //$(this).effect("highlight", {color: 'blue'}, 3000);
+
+        }
+
+
+        // function flashHelper(someColor)
+        // {
+        //     console.log('eagle has landed');
+        //     myScreen.animate({backgroundColor: someColor});
+        //     //myScreen.dequeue();
+        // }
 
 		function genHTMLScreen()
 		{
@@ -451,6 +509,7 @@ $(document).ready(
   			//Save cookies until "the end of time"
   			docCookies.setItem('RABBITT_save_data', textToSave, new Date(0x7fffffff * 1e3));
 
+            flashScreen(saveClr);
 
 
   		}
@@ -458,6 +517,7 @@ $(document).ready(
         //load func
   		function loadState()
   		{
+            flashScreen(loadClr);
 
   			var cookieFetchRes = docCookies.getItem('RABBITT_save_data');
 
