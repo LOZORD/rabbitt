@@ -254,6 +254,8 @@ $(document).ready(
 
 		}
 
+        //return a valid rgb number for any number num bits
+        //warning -- not tested for 8 bits (2^8 = 255)
 		function rgbNormalize(num)
 		{
 			return (num * 255 / (Math.pow(2, eachClrBit) - 1));
@@ -297,7 +299,6 @@ $(document).ready(
 
 		function getEventTarget(e)
 		{
-
 			if (e.type === 'keydown')
 			{
 				return determineKey(e);
