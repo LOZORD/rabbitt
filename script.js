@@ -2,7 +2,6 @@ $(document).ready(
 
 
 	/* TODO
-	-- make code less janky i.e. refactor
 	-- make row/col conflict and weird html less janky
     -- add x button for overlays
     xx bigger button font
@@ -105,41 +104,13 @@ $(document).ready(
 						updateScreen(myTarget);
 					else if (myTarget === resetCode)
 						resetScreen();
-					//TODO make own function!!!
 					else if (myTarget === printCode)
-					{
-						var output = genHTMLScreen();
-
-						$('#guide').text(output);
-
-
-						$('#guide').prepend('<span style="color:gray;">---<br/><br/>Your RABBITT printout...<br/>\
-							<span id="print_closer"> < CLICK HERE TO CLOSE > </span><br/><br/>---<br/></span>');
-
-
-						$('#guide_ctr').show('slide', {}, 1000);
-
-						$('#print_closer').click(
-							function()
-							{
-								$('#guide_ctr').hide('slide', {}, 1000);
-							}
-						);
-
-
-					}
-
+                        printCall();
 					else if (myTarget === _saveCode)
-					{
 						saveState();
-					}
 					else if (myTarget === _loadCode)
-					{
 						loadState();
-					}
-
-					//XXX use? TODO
-					myTarget = "#" + myTarget;
+                    //otherwise, do nothing
 
 				}
 			}
@@ -296,6 +267,30 @@ $(document).ready(
 				}
 		}
 
+        function printCall()
+        {
+            //get the eArr data in HTML form and set it to the guide's text
+
+            var output = genHTMLScreen();
+
+            $('#guide').text(output);
+
+            //prepend a close message
+            $('#guide').prepend('<span style="color:gray;">---<br/><br/>Your RABBITT printout...<br/>\
+                <span id="print_closer"> < CLICK HERE TO CLOSE > </span><br/><br/>---<br/></span>');
+
+            //slide out the guide
+            $('#guide_ctr').show('slide', {}, 1000);
+
+            //slide away the guide when the user clicks
+            $('#print_closer').click
+            (
+                function()
+                {
+                    $('#guide_ctr').hide('slide', {}, 1000);
+                }
+            );
+        }
 
 		function getEventTarget(e)
 		{
