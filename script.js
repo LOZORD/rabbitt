@@ -6,7 +6,7 @@ $(document).ready(
     xx add x button for overlays
     xx bigger button font
     xx change background
-    -- feedback for partial strings
+    xx feedback for partial strings
     -- add indication to screen to show length of required string
     -- flash text on save and load
     xx add backspace compatibility
@@ -369,37 +369,9 @@ $(document).ready(
 
         function flashScreen(someColor)
         {
-            //console.log("eagle?");
-            //hardcoded at 350
-            // myScreen.animate
-            // (
-            //     {backgroundColor: someColor},
-            //     350,
-            //     'swing',
-            //     flashHelper
-            // );
-            //myScreen.animate({backgroundColor: 'tan'}, 350);
-            
-
-            // myScreen.animate({backgroundColor: someColor}, 350);
-            // myScreen.queue(flashHelper(screenClr));
-
-            //myScreen.animate({backgroundColor: screenClr}, flashHelper(someColor));
-            
-
             myScreen.effect("highlight", {color: someColor});
             
-            //$(this).effect("highlight", {color: 'blue'}, 3000);
-
         }
-
-
-        // function flashHelper(someColor)
-        // {
-        //     console.log('eagle has landed');
-        //     myScreen.animate({backgroundColor: someColor});
-        //     //myScreen.dequeue();
-        // }
 
 		function genHTMLScreen()
 		{
