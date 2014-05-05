@@ -13,7 +13,9 @@ body
 	width: 100%;
 	/*background-image: url("noise_bg.png"); */
 	background-color: black;
-	background-image: url('blk_ns.png');
+	background-image: url('noisier.png');
+	/* THANKS TO */
+	/* http://www.noisetexturegenerator.com/ */
 }
 
 h1
