@@ -2,15 +2,15 @@ $(document).ready(
 
 
 	/* TODO
-	-- make row/col conflict and weird html less janky
+	-- make row/col conflict and weird html less janky (later...)
     xx add x button for overlays
     xx bigger button font
     xx change background
     xx feedback for partial strings
-    -- add indication to screen to show length of required string
-    -- flash text on save and load
+    xx add indication to screen to show length of required string
+    xx flash text on save and load
     xx add backspace compatibility
-    -- give examples
+    xx give examples
     -- hammer.js for tablet compatibility
     -- make it into a puzzle toy
     xx fix enter button
@@ -266,26 +266,30 @@ $(document).ready(
 		function submitScreen()
 		{
 			if (myScreen.text().length === binStringLengthMax)
-				{
-					//push the current binary screen to make changes
-                    //get the color the user submits!
-					var userColor = updateBox(myScreen.text());
+			{
+				//push the current binary screen to make changes
+                //get the color the user submits!
+				var userColor = updateBox(myScreen.text());
 
-					//then, empty the screen
-					myScreen.text("");
+				//then, empty the screen
+				myScreen.text("");
 
-					//change the button back to the "inactive" color
-					$("#button_enter").css("background-color","lightgray");
+				//change the button back to the "inactive" color
+				$("#button_enter").css("background-color","lightgray");
 
-					// oneSubmit = true; XXX
-                    flashScreen(userColor);
-				}
+				// oneSubmit = true; XXX
+                flashScreen(userColor);
+			}
+            //give a random example
+            else if (myScreen.text().length === 0)
+            {
+                // flashScreen(randomChange());
+                flashScreen(randomChange());
+            }
+            //the user is in the middle of entering text, don't do anything
             else
             {
-                //user did not read directions
-                //myScreen.animate({backgroundColor: 'white'}, 350).animate({backgroundColor})
                 flashScreen(notEnoughInputClr);
-                //myScreen.animate({backgroundColor: 'tan'}, 350);
             }
 		}
 
@@ -518,6 +522,40 @@ $(document).ready(
 
   		}
 
+        //apply a random color to a random block
+        function randomChange()
+        {
+            //get a random row and color number
+            //-1 for [0,4) i.e. [0,3]
+            var rowNum = getRandomInt(0, rowLength - 1);
+            var colNum = getRandomInt(0, colLength - 1);
+
+            //there are 2^(clr_bits) - 1 colors available
+            var clrRange = Math.pow(2, eachClrBit) - 1;
+
+            //generate a random Red, Green, and Blue
+            //be sure to normalize them according to the number of bits
+            var rC = rgbNormalize(getRandomInt(0, clrRange));
+            var gC = rgbNormalize(getRandomInt(0, clrRange));
+            var bC = rgbNormalize(getRandomInt(0, clrRange));
+
+            //create the color screen
+            var color = 'rgb(' + rC + ',' + gC + ',' + bC + ')';
+
+            //set the block element
+            setScreenElement(rowNum, colNum, color);
+
+            return color;
+        }
+
+
+        // Returns a random integer between min and max
+        // Using Math.round() will give you a non-uniform distribution!
+        // THANKS MDN, I AM LAZY
+        function getRandomInt(min, max)
+        {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
 
 
 	} //end inclosing function
