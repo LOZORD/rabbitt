@@ -87,6 +87,8 @@ $(document).ready(
 		$("#numColBits").text(numColBits);
 		$("#numClrBits").text(numClrBits);
 
+        $("#numDigitsRequired").text(binStringLengthMax);
+
 
 		//the main user input function
 		//active on keyboard or click input

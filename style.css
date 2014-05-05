@@ -21,6 +21,12 @@ h1
 	/*font-family: 'Molle';*/
 }
 
+code
+{
+	font-family: Menlo, monospace;
+	font-style: italic;
+}
+
 .container
 {
 	margin: 0 auto;
@@ -204,6 +210,11 @@ h1
 	font-size: 1.5em;
 }
 
+.clickBtn
+{
+	letter-spacing: 3px;
+}
+
 #button0
 {
 	background-color: black;
@@ -225,6 +236,17 @@ h1
 	background-color: lightgray;
 	color: black;
 	/*float: left;*/
+}
+
+#digitText
+{
+	position:absolute;
+	right:10px;
+	color:black;
+	font-family:Yellowtail, cursive;
+	top:-15px;
+	font-size:1em;
+	margin: 0 auto;
 }
 
 #screen
