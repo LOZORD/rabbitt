@@ -52,6 +52,9 @@ $(document).ready(
 		const oneKey = 49;
 		const enterKey = 13;
         const bckspKey = 8;
+        //we just want to disable tab from stopping key input
+        //see determineKey for info
+        const tabKey = 9;
 
         //code names
         const enterCode = 'entr';
@@ -366,6 +369,13 @@ $(document).ready(
 				return enterCode;
             else if (e.keyCode === bckspKey)
                 return bckspCode;
+            else if (e.keyCode === tabKey)
+            {
+                //do nothing on press of tab key
+                //this was stopping key input earlier, so just disable it
+                e.preventDefault();
+                return;
+            }
 			else
 				return null;
 		}
