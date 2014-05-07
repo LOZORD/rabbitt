@@ -328,7 +328,8 @@ code
 #logo
 {
 	font-size: 2.25em;
-	color: #949494;
+	/*color: #949494;*/
+	color: #c4941c;
 	text-align: center;
 }
 
