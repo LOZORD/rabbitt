@@ -290,48 +290,7 @@ $(document).ready(
                 //i.e. "color the first block element blue"
                 if (!exampleGiven)
                 {
-                    var ii = 0;
-
-                    var exampleStr = '';
-
-                    //fill in the proper amnt of row bits
-                    while (ii++ < numRowBits)
-                    {
-                        exampleStr += '0';
-                    }
-
-                    ii = 0;
-
-                    //then column bits
-                    while (ii++ < numColBits)
-                    {
-                        exampleStr += '0';
-                    }
-
-                    ii = 0;
-
-                    //then the correct of # of Red and Green bits, set to 0
-                    while (ii++ < eachClrBit * 2)
-                    {
-                        exampleStr += '0';
-                    }
-
-                    ii = 0;
-
-                    //and then finally the blue bits
-
-                    while (ii++ < eachClrBit)
-                    {
-                        exampleStr += '1';
-                    }
-
-
-                    //write the text
-                    myScreen.text(exampleStr);
-
-                    //set the flag
-                    exampleGiven = true;
-
+                    giveGuideExample();
                 }
 
                 //otherwise, apply some random change
@@ -421,6 +380,9 @@ $(document).ready(
 			}
 
             flashScreen(resetClr);
+
+            //reset the example flag
+            exampleGiven = false;
 		}
 
 		//
@@ -609,6 +571,53 @@ $(document).ready(
         function getRandomInt(min, max)
         {
             return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        //i.e. just put the text on the screen to make the first block element blue
+        //then set the example given flag
+        function giveGuideExample()
+        {
+            var ii = 0;
+
+            var exampleStr = '';
+
+            //fill in the proper amnt of row bits
+            while (ii++ < numRowBits)
+            {
+                exampleStr += '0';
+            }
+
+            ii = 0;
+
+            //then column bits
+            while (ii++ < numColBits)
+            {
+                exampleStr += '0';
+            }
+
+            ii = 0;
+
+            //then the correct of # of Red and Green bits, set to 0
+            while (ii++ < eachClrBit * 2)
+            {
+                exampleStr += '0';
+            }
+
+            ii = 0;
+
+            //and then finally the blue bits
+
+            while (ii++ < eachClrBit)
+            {
+                exampleStr += '1';
+            }
+
+
+            //write the text
+            myScreen.text(exampleStr);
+
+            //set the flag
+            exampleGiven = true;
         }
 
 
