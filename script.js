@@ -77,6 +77,8 @@ $(document).ready(
 		var guideGone = false;
 		var holdGuide = false;
 
+        var exampleGiven = false;
+
 		//XXX needed?
 		// var oneSubmit = false;
 
@@ -280,11 +282,63 @@ $(document).ready(
 				// oneSubmit = true; XXX
                 flashScreen(userColor);
 			}
-            //give a random example
+            //give a (possibly) random example
             else if (myScreen.text().length === 0)
             {
-                // flashScreen(randomChange());
-                flashScreen(randomChange());
+                //if it is the first time, given an example
+                //the example is the one given in the guide
+                //i.e. "color the first block element blue"
+                if (!exampleGiven)
+                {
+                    var ii = 0;
+
+                    var exampleStr = '';
+
+                    //fill in the proper amnt of row bits
+                    while (ii++ < numRowBits)
+                    {
+                        exampleStr += '0';
+                    }
+
+                    ii = 0;
+
+                    //then column bits
+                    while (ii++ < numColBits)
+                    {
+                        exampleStr += '0';
+                    }
+
+                    ii = 0;
+
+                    //then the correct of # of Red and Green bits, set to 0
+                    while (ii++ < eachClrBit * 2)
+                    {
+                        exampleStr += '0';
+                    }
+
+                    ii = 0;
+
+                    //and then finally the blue bits
+
+                    while (ii++ < eachClrBit)
+                    {
+                        exampleStr += '1';
+                    }
+
+
+                    //write the text
+                    myScreen.text(exampleStr);
+
+                    //set the flag
+                    exampleGiven = true;
+
+                }
+
+                //otherwise, apply some random change
+                else
+                {
+                    flashScreen(randomChange());
+                }
             }
             //the user is in the middle of entering text, don't do anything
             else
