@@ -91,6 +91,8 @@ $(document).ready(
 
         $("#numDigitsRequired").text(binStringLengthMax);
 
+        $(".eachClrBit").text(eachClrBit);
+
 
 		//the main user input function
 		//active on keyboard or click input
